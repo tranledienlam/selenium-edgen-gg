@@ -32,7 +32,7 @@ class Auto:
     def confirm_login(self):
         confirmed = False
         
-        self.node.find_and_click(By.XPATH, '//span[@class[contains(., "block")] and normalize-space(.)="Aura Leaderboard"]/..')
+        self.node.find_and_click(By.XPATH, '//span[normalize-space(.)="Aura Leaderboard"]/..')
         selectors = [
             (By.CSS_SELECTOR, "login-modal"),
             (By.CSS_SELECTOR, '[data-method="GOOGLE"]')
@@ -85,8 +85,9 @@ class Auto:
         if not self.loaded():
             return None
 
-        btn_leaderboard = self.node.find(By.XPATH, '//span[@class[contains(., "block")] and normalize-space(.)="Aura Leaderboard"]/..')
+        btn_leaderboard = self.node.find(By.XPATH, '//span[normalize-space(.)="Aura Leaderboard"]/..')
         if btn_leaderboard:
+            self.node.scroll_to(btn_leaderboard)
             text_btn = self.node.get_text(By.XPATH, './div[last()]', btn_leaderboard)
             
             if not text_btn:
@@ -113,7 +114,7 @@ class Auto:
             return check_login
 
     def check_in(self):
-        self.node.find_and_click(By.XPATH, '//span[@class[contains(., "block")] and normalize-space(.)="Aura Leaderboard"]/..')
+        self.node.find_and_click(By.XPATH, '//span[normalize-space(.)="Aura Leaderboard"]/..')
         if not self.node.find(By.XPATH, '//p[contains(.,"Check-in")]'):
             return
         btns = self.node.find_all(By.TAG_NAME, 'button')
@@ -132,7 +133,7 @@ class Auto:
         if not self.check_in():
             self.node.snapshot(f'Check-in thất bại')
 
-        point = self.node.get_text(By.XPATH, '//span[@class[contains(., "block")] and normalize-space(.)="Aura Leaderboard"]/../div[last()]')
+        point = self.node.get_text(By.XPATH, '//span[normalize-space(.)="Aura Leaderboard"]/../div[last()]')
         self.node.snapshot(f'Check-in thành công. Point: {point}')
         input('Enter')
 
